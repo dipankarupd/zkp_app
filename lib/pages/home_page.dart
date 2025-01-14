@@ -80,31 +80,36 @@ class _HomePageState extends State<HomePage> {
       markerLocation.long,
     );
     // print(res);
-    final Response res;
+    ResponseModel? res;
     // handle dio response:
     try {
       const url = "https://utterly-legal-toad.ngrok-free.app/run_pipeline";
 
-      res = await dio.post(
+      //print(distance);
+
+      final result = await dio.post(
         url,
-        data: {"distance": distance},
+        data: {"distance": distance.toInt()},
       );
 
-      print(res.statusCode);
+      final respData = result.data;
+      res = ResponseModel(
+        time: DateTime.now(),
+        res: respData["result"],
+      );
+      return res;
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
+      return ResponseModel(time: DateTime.now(), res: "0");
     }
-
-    ResponseModel resp = ResponseModel(time: DateTime.now(), res: "1");
-    return resp;
   }
 
   @override
   Widget build(BuildContext context) {
-    Future verificationDialog() => showDialog(
+    Future verificationDialog(bool flag) => showDialog(
           context: context,
-          builder: (context) => const VerificationDialog(
-            isSuccess: true,
+          builder: (context) => VerificationDialog(
+            isSuccess: flag,
           ),
         );
 
@@ -138,7 +143,13 @@ class _HomePageState extends State<HomePage> {
           ),
           ElevatedButton(
             onPressed: () async {
-              verificationDialog();
+              ResponseModel res = await _getResponse();
+
+              if (res.res == "1") {
+                verificationDialog(true);
+              } else {
+                verificationDialog(false);
+              }
             },
             child: const Text('Submit'),
           ),
