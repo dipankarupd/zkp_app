@@ -8,4 +8,7 @@ abstract interface class AppRepository {
     required double latitude,
     required double longitude,
   });
+  Future<Either<Failure, UserEntity>> login({
+    required String token,
+  });
 }

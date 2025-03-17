@@ -7,6 +7,9 @@ class UserModel extends UserEntity {
     required LocationModel super.location,
     required super.token,
     required super.createdAt,
+    required super.presentCount,
+    required super.absentCount,
+    super.lastChecked,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -17,7 +20,12 @@ class UserModel extends UserEntity {
           ? LocationModel.fromJson(json['location'] as Map<String, dynamic>)
           : LocationModel(latitude: 0.0, longitude: 0.0),
       token: json['login_token'] as int? ?? 0,
-      createdAt: json['createdAt'] as String? ?? '',
+      createdAt: json['created_at'] as String? ?? '',
+      presentCount: json['present_count'] as int? ?? 0,
+      absentCount: json['absent_count'] as int? ?? 0,
+      lastChecked: json['last_checked'] != null
+          ? DateTime.tryParse(json['last_checked'])
+          : null,
     );
   }
 
@@ -27,7 +35,10 @@ class UserModel extends UserEntity {
       'name': name,
       'location': (location as LocationModel).toJson(),
       'login_token': token,
-      'createdAt': createdAt,
+      'created_at': createdAt,
+      'present_count': presentCount,
+      'absent_count': absentCount,
+      'last_checked': lastChecked?.toIso8601String(),
     };
   }
 }

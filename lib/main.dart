@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zkp_app/app/config/routes/app_routes.dart';
+import 'package:zkp_app/app/presentation/bloc/login/bloc/login_bloc.dart';
 import 'package:zkp_app/app/presentation/bloc/registration/bloc/bloc_bloc.dart';
+import 'package:zkp_app/app/presentation/views/home/home_page.dart';
+import 'package:zkp_app/app/presentation/views/login/login_page.dart';
 import 'package:zkp_app/app/presentation/views/registration/registration_page.dart';
 import 'package:zkp_app/app/presentation/views/registration/show_map_page.dart';
 import 'package:zkp_app/app/utils/di.dart';
+import 'package:zkp_app/old/pages/home_page.dart';
 
 void main() {
   // Initialize DI first
@@ -23,14 +27,19 @@ class MyApp extends StatelessWidget {
         BlocProvider<RegistrationBloc>(
           create: (context) => serviceLocator<RegistrationBloc>(),
         ),
+        BlocProvider<LoginBloc>(
+          create: (context) => serviceLocator<LoginBloc>(),
+        ),
         // Add other BLoCs similarly if needed
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.registrationPage,
+        initialRoute: AppRoutes.initial,
         routes: {
+          AppRoutes.initial: (context) => LoginPage(),
           AppRoutes.registrationPage: (context) => RegistrationPage(),
           AppRoutes.registerMapPage: (context) => const RegistrationMapPage(),
+          AppRoutes.home: (context) => const HomePageNew()
         },
       ),
     );

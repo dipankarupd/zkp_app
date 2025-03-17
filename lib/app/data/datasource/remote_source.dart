@@ -11,6 +11,10 @@ abstract interface class RemoteDataSource {
     required double latitude,
     required double longitude,
   });
+
+  Future<UserModel> login({
+    required String token,
+  });
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -38,6 +42,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         },
       );
       print('res: $res');
+      final user = UserModel.fromJson(res.data as Map<String, dynamic>);
+      return user;
+    } catch (e) {
+      print(e.toString());
+      throw AppException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<UserModel> login({required String token}) async {
+    try {
+      final res = await dio.get('${AppConstants.APP_URL}/user/$token');
       final user = UserModel.fromJson(res.data as Map<String, dynamic>);
       return user;
     } catch (e) {

@@ -31,4 +31,20 @@ class AppRepositoryImpl implements AppRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, UserEntity>> login({
+    required String token,
+  }) async {
+    try {
+      UserModel user = await source.login(token: token);
+      return right(user);
+    } catch (e) {
+      return left(
+        Failure(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
 }

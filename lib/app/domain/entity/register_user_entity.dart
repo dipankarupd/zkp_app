@@ -4,6 +4,9 @@ class UserEntity {
   final LocationEntity location;
   final int token;
   final String createdAt;
+  final int presentCount;
+  final int absentCount;
+  final DateTime? lastChecked; // Nullable DateTime
 
   UserEntity({
     required this.id,
@@ -11,6 +14,9 @@ class UserEntity {
     required this.location,
     required this.token,
     required this.createdAt,
+    required this.presentCount,
+    required this.absentCount,
+    this.lastChecked, // Nullable
   });
 }
 
