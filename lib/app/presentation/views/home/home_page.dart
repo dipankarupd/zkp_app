@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:zkp_app/app/domain/entity/register_user_entity.dart';
 import 'package:zkp_app/app/presentation/bloc/home/bloc/home_bloc.dart';
 import 'package:zkp_app/old/widgets/verification_dialog.dart';
@@ -144,12 +145,13 @@ class HomePageNew extends StatelessWidget {
                           ),
                           Text(
                             displayUser.lastChecked != null
-                                ? displayUser.lastChecked!.toIso8601String()
+                                ? DateFormat('dd MMM yyyy, hh:mm a')
+                                    .format(displayUser.lastChecked!)
                                 : 'Not checked in',
                             style: TextStyle(
                               color: displayUser.lastChecked != null
                                   ? Colors.brown[500]
-                                  : Colors.red, // Red if null
+                                  : Colors.red,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
