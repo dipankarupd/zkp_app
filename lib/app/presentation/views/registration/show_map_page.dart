@@ -158,6 +158,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:zkp_app/app/config/routes/app_routes.dart';
 import 'package:zkp_app/app/presentation/bloc/registration/bloc/bloc_bloc.dart';
 
 class RegistrationMapPage extends StatefulWidget {
@@ -236,7 +237,14 @@ class _RegistrationMapPageState extends State<RegistrationMapPage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              // Navigator.of(context).popUntil(
+              //   (route) => route.isFirst,
+              // );
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                AppRoutes.initial,
+                (Route<dynamic> route) => false,
+              );
             },
             child: const Text('OK'),
           ),
@@ -272,7 +280,9 @@ class _RegistrationMapPageState extends State<RegistrationMapPage> {
           }
           // Show error
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage!)),
+            SnackBar(
+              content: Text('Something went wrong. Try again later'),
+            ),
           );
         }
       },
@@ -316,10 +326,6 @@ class _RegistrationMapPageState extends State<RegistrationMapPage> {
                 onPressed: () {
                   // Handle location selection
                   if (_marker != null) {
-                    // Print the latitude and longitude values of the selected location
-                    print('Latitude: ${_marker!.position.latitude}');
-                    print('Longitude: ${_marker!.position.longitude}');
-
                     // Trigger registration submission
                     context.read<RegistrationBloc>().add(
                           RegistrationSubmittedEvent(),
