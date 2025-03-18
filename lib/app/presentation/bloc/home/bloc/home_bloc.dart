@@ -43,7 +43,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       // Convert to integer (assuming distance in meters)
       // considering 500m
-      int distance = distanceInMeters.round() * 100;
+      int distance = distanceInMeters.round() * 1000;
       // Verify distance
       final verifyResult = await verifyUsecase(
         VerifyParams(distance: distance),

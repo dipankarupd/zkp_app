@@ -74,7 +74,8 @@ class HomePageNew extends StatelessWidget {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text('Error'),
-                  content: Text(state.message),
+                  content:
+                      Text('Something went extremely wrong. Try again later!'),
                   actions: [
                     TextButton(
                       onPressed: () {
