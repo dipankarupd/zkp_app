@@ -77,8 +77,8 @@ class VerificationDialog2 extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             isSuccess
-                ? 'Your location has been verified successfully.'
-                : 'Your location verification failed. Please try again.',
+                ? 'Your location has been verified successfully. You will be marked present'
+                : 'Your failed to be at the correct location. You will be marked absent',
           ),
         ],
       ),
