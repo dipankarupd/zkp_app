@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class VerificationDialog extends StatelessWidget {
@@ -44,6 +43,56 @@ class VerificationDialog extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class VerificationDialog2 extends StatelessWidget {
+  final bool isSuccess;
+  final VoidCallback? onClosed;
+
+  const VerificationDialog2({
+    Key? key,
+    required this.isSuccess,
+    this.onClosed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        isSuccess ? 'Verification Successful' : 'Verification Failed',
+        style: TextStyle(
+          color: isSuccess ? Colors.green : Colors.red,
+        ),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            isSuccess ? Icons.check_circle : Icons.cancel,
+            color: isSuccess ? Colors.green : Colors.red,
+            size: 64,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            isSuccess
+                ? 'Your location has been verified successfully.'
+                : 'Your location verification failed. Please try again.',
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            if (onClosed != null) {
+              onClosed!();
+            }
+          },
+          child: const Text('Close'),
+        ),
+      ],
     );
   }
 }
